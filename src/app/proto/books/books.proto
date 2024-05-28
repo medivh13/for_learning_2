@@ -1,0 +1,61 @@
+syntax = "proto3";
+
+option go_package = "proto/books";
+
+package books;
+
+
+message BookReq {
+    string subject=1;
+}
+
+message BookResp {
+    string name =1;
+	string subject_type=2;
+	repeated Work works=3;
+}
+
+message Work {
+    string title=1;
+    int64 cover_id=2;
+    int64 edition_count=3;
+    repeated Author authors=4;
+}
+
+message Author  {
+	string name=1;
+}
+service BookService {
+    rpc Book(BookReq) returns (BookResp) {}
+}
+
+// membuat proto :
+// protoc -I=src/app/proto/ --go_out=src/app/proto/ --go_opt=paths=source_relative 
+// --go-grpc_out=src/app/proto/ --go-grpc_opt=paths=source_relative src/app/proto/books/books.proto
+
+// protoc:
+
+// Ini adalah perintah untuk menjalankan Protocol Buffers compiler.
+// -I=src/app/proto/:
+
+// -I menandakan direktori yang akan digunakan sebagai root untuk mencari file .proto.
+// src/app/proto/ adalah direktori tempat file .proto berada.
+// --go_out=src/app/proto/:
+
+// --go_out menentukan direktori output untuk file Go yang dihasilkan.
+// src/app/proto/ adalah direktori di mana file Go akan dihasilkan.
+// --go_opt=paths=source_relative:
+
+// --go_opt adalah opsi tambahan untuk --go_out.
+// paths=source_relative menginstruksikan compiler untuk menyimpan file Go yang dihasilkan relatif terhadap lokasi file .proto.
+// --go-grpc_out=src/app/proto/:
+
+// --go-grpc_out menentukan direktori output untuk file Go gRPC yang dihasilkan.
+// src/app/proto/ adalah direktori di mana file Go gRPC akan dihasilkan.
+// --go-grpc_opt=paths=source_relative:
+
+// --go-grpc_opt adalah opsi tambahan untuk --go-grpc_out.
+// paths=source_relative menginstruksikan compiler untuk menyimpan file Go gRPC yang dihasilkan relatif terhadap lokasi file .proto.
+// src/app/proto/books/books.proto:
+
+// Ini adalah path dari file .proto yang akan dikompilasi.
